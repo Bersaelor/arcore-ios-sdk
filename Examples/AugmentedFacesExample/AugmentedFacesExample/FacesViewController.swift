@@ -124,7 +124,7 @@ public final class FacesViewController: UIViewController {
 
     videoFieldOfView = captureDevice?.activeFormat.videoFieldOfView ?? 0
 
-    cameraImageLayer.contentsGravity = .center
+    cameraImageLayer.contentsGravity = .resizeAspectFill
     cameraImageLayer.frame = self.view.bounds
     view.layer.insertSublayer(cameraImageLayer, at: 0)
 
@@ -181,6 +181,16 @@ public final class FacesViewController: UIViewController {
     // 'forward' (Z+) opposite of SceneKit's forward (Z-), so rotate to orient correctly.
     node.simdLocalRotate(by: simd_quatf(angle: .pi, axis: simd_float3(0, 1, 0)))
   }
+    
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            
+        }) { (_) in
+            self.cameraImageLayer.frame = CGRect(origin: .zero, size: size)
+        }
+    }
 
 }
 
@@ -225,12 +235,12 @@ extension FacesViewController : GARAugmentedFaceSessionDelegate {
             updateTransform(face.transform(for: .foreheadLeft), for: foreheadLeftNode)
             updateTransform(face.transform(for: .foreheadRight), for: foreheadRightNode)
         }
-        
+                
         // Set the scene camera's transform to the projection matrix for this frame.
         sceneCamera.projectionTransform = SCNMatrix4.init(
             frame.projectionMatrix(
                 forViewportSize: sceneView.bounds.size,
-                presentationOrientation: .portrait,
+                presentationOrientation: UIDeviceOrientation(statusBarOrientation: UIApplication.shared.statusBarOrientation, mirrored: true),
                 mirrored: false,
                 zNear: 0.05,
                 zFar: 100)
@@ -240,8 +250,8 @@ extension FacesViewController : GARAugmentedFaceSessionDelegate {
         cameraImageLayer.contents = frame.capturedImage as CVPixelBuffer
         cameraImageLayer.setAffineTransform(
             frame.displayTransform(
-                forViewportSize: cameraImageLayer.bounds.size,
-                presentationOrientation: .portrait,
+                forViewportSize: sceneView.bounds.size,
+                presentationOrientation: UIDeviceOrientation(statusBarOrientation: UIApplication.shared.statusBarOrientation, mirrored: false),
                 mirrored: true
             )
         )
@@ -261,4 +271,22 @@ extension FacesViewController : SCNSceneRendererDelegate {
 
   }
 
+}
+
+
+extension UIDeviceOrientation {
+    init(statusBarOrientation: UIInterfaceOrientation, mirrored: Bool) {
+        switch statusBarOrientation {
+        case .portrait:
+            self = .portrait
+        case .portraitUpsideDown:
+            self = .portraitUpsideDown
+        case .landscapeLeft:
+            self = mirrored ? .landscapeRight : .landscapeLeft
+        case .landscapeRight:
+            self = mirrored ? .landscapeLeft : .landscapeRight
+        default:
+            self = .unknown
+        }
+    }
 }
