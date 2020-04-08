@@ -13,9 +13,11 @@
 		6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6933B02223172481007E1C28 /* FacesViewController.swift */; };
 		6933B02C23172482007E1C28 /* Face.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02323172481007E1C28 /* Face.scnassets */; };
 		6933B02D23172482007E1C28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6933B02423172481007E1C28 /* AppDelegate.swift */; };
+		F94A7071A953B2F8F5165205 /* libPods-AugmentedFacesExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E717C023189BA021C434B4 /* libPods-AugmentedFacesExample.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35E717C023189BA021C434B4 /* libPods-AugmentedFacesExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AugmentedFacesExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		692DB6DC22FCA472007A4EEF /* AugmentedFacesExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AugmentedFacesExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6933B01F23172481007E1C28 /* FaceMeshGeometryConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceMeshGeometryConverter.swift; sourceTree = "<group>"; };
 		6933B02023172481007E1C28 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		6933B02323172481007E1C28 /* Face.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Face.scnassets; sourceTree = "<group>"; };
 		6933B02423172481007E1C28 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6933B02723172481007E1C28 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E217A143F2F1AA1996C28714 /* Pods-AugmentedFacesExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AugmentedFacesExample.debug.xcconfig"; path = "Target Support Files/Pods-AugmentedFacesExample/Pods-AugmentedFacesExample.debug.xcconfig"; sourceTree = "<group>"; };
+		F42F3B4EF4A3A743A918DA4E /* Pods-AugmentedFacesExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AugmentedFacesExample.release.xcconfig"; path = "Target Support Files/Pods-AugmentedFacesExample/Pods-AugmentedFacesExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,18 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F94A7071A953B2F8F5165205 /* libPods-AugmentedFacesExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2776DE25BA65BFC950F949A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				35E717C023189BA021C434B4 /* libPods-AugmentedFacesExample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		692DB6D322FCA472007A4EEF = {
 			isa = PBXGroup;
 			children = (
 				6933B01E23172481007E1C28 /* AugmentedFacesExample */,
 				692DB6DD22FCA472007A4EEF /* Products */,
 				96AE2E2B17F4EF661A6BFC2A /* Pods */,
+				2776DE25BA65BFC950F949A3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +85,8 @@
 		96AE2E2B17F4EF661A6BFC2A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				E217A143F2F1AA1996C28714 /* Pods-AugmentedFacesExample.debug.xcconfig */,
+				F42F3B4EF4A3A743A918DA4E /* Pods-AugmentedFacesExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -82,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 692DB6EE22FCA472007A4EEF /* Build configuration list for PBXNativeTarget "AugmentedFacesExample" */;
 			buildPhases = (
+				CC46B51515EFEA1AE82ED94A /* [CP] Check Pods Manifest.lock */,
 				692DB6D822FCA472007A4EEF /* Sources */,
 				692DB6D922FCA472007A4EEF /* Frameworks */,
 				692DB6DA22FCA472007A4EEF /* Resources */,
+				242B96577B0BCBD62C93C139 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -141,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		242B96577B0BCBD62C93C139 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AugmentedFacesExample/Pods-AugmentedFacesExample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AugmentedFacesExample/Pods-AugmentedFacesExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AugmentedFacesExample/Pods-AugmentedFacesExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC46B51515EFEA1AE82ED94A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AugmentedFacesExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		692DB6D822FCA472007A4EEF /* Sources */ = {
@@ -274,11 +334,12 @@
 		};
 		692DB6EF22FCA472007A4EEF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E217A143F2F1AA1996C28714 /* Pods-AugmentedFacesExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H43Z4288RY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/AugmentedFacesExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -286,7 +347,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.arcore.FacesSample;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mathheartcode.arcore.FacesSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -296,11 +357,12 @@
 		};
 		692DB6F022FCA472007A4EEF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F42F3B4EF4A3A743A918DA4E /* Pods-AugmentedFacesExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H43Z4288RY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/AugmentedFacesExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -308,7 +370,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.arcore.FacesSample;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mathheartcode.arcore.FacesSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

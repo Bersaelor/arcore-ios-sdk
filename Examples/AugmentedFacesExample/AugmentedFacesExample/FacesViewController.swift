@@ -57,8 +57,9 @@ public final class FacesViewController: UIViewController {
     setupMotion()
 
     faceSession = try! GARAugmentedFaceSession(fieldOfView: videoFieldOfView)
+    faceSession?.delegate = self
   }
-
+        
   /// Create the scene view from a scene and supporting nodes, and add to the view.
   /// The scene is loaded from 'fox_face.scn' which was created from 'canonical_face_mesh.fbx', the
   /// canonical face mesh asset.
@@ -208,51 +209,56 @@ extension FacesViewController : AVCaptureVideoDataOutputSampleBufferDelegate {
 
 }
 
+// MARK: - Face Session delegate
+
+extension FacesViewController : GARAugmentedFaceSessionDelegate {
+    
+    public func didUpdate(_ frame: GARAugmentedFaceFrame) {
+        if let face = frame.face {
+            faceTextureNode.geometry = faceMeshConverter.geometryFromFace(face)
+            faceTextureNode.geometry?.firstMaterial = faceTextureMaterial
+            faceOccluderNode.geometry = faceTextureNode.geometry?.copy() as? SCNGeometry
+            faceOccluderNode.geometry?.firstMaterial = faceOccluderMaterial
+            
+            faceNode.simdWorldTransform = face.centerTransform
+            updateTransform(face.transform(for: .nose), for: noseTipNode)
+            updateTransform(face.transform(for: .foreheadLeft), for: foreheadLeftNode)
+            updateTransform(face.transform(for: .foreheadRight), for: foreheadRightNode)
+        }
+        
+        // Set the scene camera's transform to the projection matrix for this frame.
+        sceneCamera.projectionTransform = SCNMatrix4.init(
+            frame.projectionMatrix(
+                forViewportSize: sceneView.bounds.size,
+                presentationOrientation: .portrait,
+                mirrored: false,
+                zNear: 0.05,
+                zFar: 100)
+        )
+        
+        // Update the camera image layer's transform to the display transform for this frame.
+        cameraImageLayer.contents = frame.capturedImage as CVPixelBuffer
+        cameraImageLayer.setAffineTransform(
+            frame.displayTransform(
+                forViewportSize: cameraImageLayer.bounds.size,
+                presentationOrientation: .portrait,
+                mirrored: true
+            )
+        )
+        
+        // Only show AR content when a face is detected.
+        sceneView.scene?.rootNode.isHidden = frame.face == nil
+    }
+    
+}
+
+
 // MARK: - Scene Renderer delegate
 
 extension FacesViewController : SCNSceneRendererDelegate {
 
   public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-    guard let frame = faceSession?.currentFrame else { return }
 
-    if let face = frame.face {
-      faceTextureNode.geometry = faceMeshConverter.geometryFromFace(face)
-      faceTextureNode.geometry?.firstMaterial = faceTextureMaterial
-      faceOccluderNode.geometry = faceTextureNode.geometry?.copy() as? SCNGeometry
-      faceOccluderNode.geometry?.firstMaterial = faceOccluderMaterial
-
-      faceNode.simdWorldTransform = face.centerTransform
-      updateTransform(face.transform(for: .nose), for: noseTipNode)
-      updateTransform(face.transform(for: .foreheadLeft), for: foreheadLeftNode)
-      updateTransform(face.transform(for: .foreheadRight), for: foreheadRightNode)
-    }
-
-    // Set the scene camera's transform to the projection matrix for this frame.
-    DispatchQueue.main.sync {
-      sceneCamera.projectionTransform = SCNMatrix4.init(
-        frame.projectionMatrix(
-          forViewportSize: sceneView.bounds.size,
-          presentationOrientation: .portrait,
-          mirrored: false,
-          zNear: 0.05,
-          zFar: 100)
-      )
-    }
-
-    // Update the camera image layer's transform to the display transform for this frame.
-    CATransaction.begin()
-    CATransaction.setAnimationDuration(0)
-    cameraImageLayer.contents = frame.capturedImage as CVPixelBuffer
-    cameraImageLayer.setAffineTransform(
-      frame.displayTransform(
-        forViewportSize: cameraImageLayer.bounds.size,
-        presentationOrientation: .portrait,
-        mirrored: true)
-    )
-    CATransaction.commit()
-
-    // Only show AR content when a face is detected.
-    sceneView.scene?.rootNode.isHidden = frame.face == nil
   }
 
 }
